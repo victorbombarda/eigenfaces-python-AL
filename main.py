@@ -35,3 +35,14 @@ for i in range(len(images)):
 #Conseguimos visualizar as imagens normalizadas
 teste_img = images_teste[0].reshape(983,800)
 Image.fromarray(teste_img)
+
+#Cria matriz quadrada 100x100
+quadrada = np.matrix(images_teste) * np.matrix(images_teste.transpose())
+quadrada = quadrada * 1/100	
+
+#Calculando os autovalores e autovetores 
+autovalores, autovetores = np.linalg.eig(quadrada)
+autovalores = autovalores[autovalores.argsort()[::-1]]
+autovetores = autovetores[:,autovalores.argsort()[::-1]]
+
+
