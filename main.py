@@ -45,4 +45,24 @@ autovalores, autovetores = np.linalg.eig(quadrada)
 autovalores = autovalores[autovalores.argsort()[::-1]]
 autovetores = autovetores[:,autovalores.argsort()[::-1]]
 
+#Selecionando os autovetores que melhor contribuem
+autovalores_somas = sum(autovalores[:]) 
+autovalores_conta = 0                                  
+autovalores_energia = 0.0
+for auto_valor in autovalores[1:]:
+        autovalores_conta += 1
+        autovalores_energia += auto_valor / autovalores_somas
+            
+        if autovalores_energia >= 0.85:
+            break
 
+#Filtrando para apenas o numero dos que contribuem
+autovalores = autovalores[:autovalores_conta]
+autovetores = autovetores[:,0:autovalores_conta]
+
+#Conseguir os autovetores corretos
+evetores = images_teste.transpose() * autovetores
+
+#Calculando a norma
+norms = np.linalg.norm(autovetores, axis=1)  
+autovetores = 1/norms * autovetores
