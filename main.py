@@ -66,3 +66,17 @@ evetores = images_teste.transpose() * autovetores
 #Calculando a norma
 norms = np.linalg.norm(autovetores, axis=1)  
 autovetores = 1/norms * autovetores
+
+#Função de classificação (falta consertar)
+def classificar(caminho):
+    img = cv2.imread(caminho, 0)                                       
+    img_col = np.array(img, dtype='uint8').flatten()                    
+    img_col -= mean                                           
+    img_col = np.reshape(img_col, images[0].shape)                             
+    S = autovetores.transpose() * img_col                                 
+                                                                                
+    diff = W - S                                                       
+    norms = np.linalg.norm(diff, axis=0)
+
+    closest_face_id = np.argmin(norms)                                      
+    return int(closest_face_id )                   
